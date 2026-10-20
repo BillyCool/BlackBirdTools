@@ -41,11 +41,23 @@ The bundle is written to `patches/build/libs/patches-1.0.0.mpp`.
 
 ## Using it
 
-- **Morphe Manager (phone):** copy the `.mpp` to the phone and add it as a patch source from a local file. Choose the NieR Re[in]carnation APK, make sure "Redirect to private server" is enabled, set the options, then patch.
+- **Morphe Manager (phone):** open **[Add to Morphe](https://morphe.software/add-source?github=BillyCool/BlackBirdTools/morphe-patches&name=BlackBird%20Patches)** on your phone to add this repo as a patch source and get updates automatically. You can also copy a locally built `.mpp` to the phone and add it as a local file. Then choose the NieR Re[in]carnation APK, make sure "Redirect to private server" is enabled, set the options, then patch.
 - **Morphe Desktop:** add the `.mpp` as a patch bundle and patch the same way.
 
 The notebook expects a single APK. If you start from a split bundle (APKM or XAPK), `libil2cpp.so` must come from the arm64 split. Morphe merges splits, but this hasn't been tested.
 
-## Publishing as a Manager source (optional)
+## Releasing
 
-To get auto-updates in Manager, this folder needs to be its own GitHub repo built from [morphe-patches-template](https://github.com/MorpheApp/morphe-patches-template), which includes the release workflow. It's left out here because that workflow assumes the patches sit at the repo root.
+Releases are built by [`.github/workflows/release-morphe-patches.yml`](../.github/workflows/release-morphe-patches.yml). To publish one, push a version tag:
+
+```bash
+git tag v1.0.1
+git push origin v1.0.1
+```
+
+The workflow:
+1. builds `patches-<version>.mpp` from the tagged commit;
+2. publishes it as a GitHub release;
+3. commits an updated [`patches-bundle.json`](./patches-bundle.json) to `main`.
+
+Morphe Manager reads that file through the add-source link (`github=BillyCool/BlackBirdTools/morphe-patches`). Don't edit it by hand.

@@ -23,7 +23,7 @@ It does the same three things as the notebook:
 
 The patch targets the Global (`com.square_enix.android_googleplay.nierspww`) and Japan (`com.square_enix.android_googleplay.nierspjp`) releases, so Morphe Manager only offers it for those two apps. It targets version **3.7.1**, the latest APK release, and Manager warns if you pick a different version.
 
-**Use the Global version.** The Japanese release is marked experimental: it hasn't been tested, and its offsets haven't been verified, so it may not work.
+**Use the Global version.** Get the 3.7.1 **APK** variant from [APKMirror (Global)](https://www.apkmirror.com/apk/square-enix-co-ltd/nier-reincarnation/). The [Japanese release](https://www.apkmirror.com/apk/square-enix-co-ltd/nier-reincarnation-2/) is marked experimental: it hasn't been tested, and its offsets haven't been verified, so it may not work.
 
 See the [main README](../README.md) for why the game is patched, including the in-app purchase changes.
 

@@ -2,12 +2,12 @@
 
 Tools for patching **NieR Re[in]carnation** for Android so it connects to a community-run private server.
 
-| Region | Package | Status |
-|--------|---------|--------|
-| Global | `com.square_enix.android_googleplay.nierspww` | **Recommended** |
-| Japan  | `com.square_enix.android_googleplay.nierspjp` | Untested: offsets not verified, may not work |
+| Region | Package | Download | Status |
+|--------|---------|----------|--------|
+| Global | `com.square_enix.android_googleplay.nierspww` | [APKMirror](https://www.apkmirror.com/apk/square-enix-co-ltd/nier-reincarnation/) | **Recommended** |
+| Japan  | `com.square_enix.android_googleplay.nierspjp` | [APKMirror](https://www.apkmirror.com/apk/square-enix-co-ltd/nier-reincarnation-2/) | Untested: offsets not verified, may not work |
 
-All patches are based on version **3.7.1**, the latest APK release. Use the Global version.
+All patches are based on version **3.7.1**, the latest APK release. Use the Global version, and download the **APK** variant (not the BUNDLE) of 3.7.1.
 
 ## Why this exists
 

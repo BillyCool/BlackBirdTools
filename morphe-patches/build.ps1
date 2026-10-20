@@ -1,4 +1,4 @@
-# Builds patches/build/libs/patches-*.mpp
+# Builds patches/build/libs/patches-*.mpp and regenerates patches-list.json
 # Needs JDK 17+ (Android Studio's bundled JBR works) and the GitHub CLI logged in,
 # because Morphe's Gradle plugin is downloaded from GitHub Packages.
 $ErrorActionPreference = 'Stop'
@@ -14,7 +14,7 @@ if (-not $env:GITHUB_TOKEN) {
 
 Push-Location $PSScriptRoot
 try {
-    .\gradlew.bat buildAndroid
+    .\gradlew.bat buildAndroid generatePatchesList
     Get-ChildItem patches\build\libs\*.mpp
 } finally {
     Pop-Location

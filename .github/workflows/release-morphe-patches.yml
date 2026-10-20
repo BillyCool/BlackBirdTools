@@ -1,7 +1,8 @@
 name: Release Morphe patches
 
 # Push a version tag (for example v1.0.1) to build the .mpp, publish it as a GitHub release
-# and point morphe-patches/patches-bundle.json on main at it, which is what Morphe Manager reads.
+# and update morphe-patches/patches-bundle.json (read by Morphe Manager) and patches-list.json
+# (read by Morphe's web-search to find APKMirror download pages) on main.
 on:
   push:
     tags:
@@ -43,6 +44,9 @@ jobs:
           sed -i "s/^version = .*/version = $VERSION/" gradle.properties
           bash ./gradlew :patches:buildAndroid --no-daemon
           test -f "patches/build/libs/patches-$VERSION.mpp"
+          bash ./gradlew :patches:generatePatchesList --no-daemon
+          # Moved aside so checking out main later cannot clash with a tracked copy.
+          mv patches-list.json "$RUNNER_TEMP/patches-list.json"
 
       - name: Create release
         env:
@@ -51,7 +55,7 @@ jobs:
           gh release create "$TAG" "morphe-patches/patches/build/libs/patches-$VERSION.mpp" \
             --title "$TAG" --generate-notes --verify-tag
 
-      - name: Update patches-bundle.json on main
+      - name: Update patches-bundle.json and patches-list.json on main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -66,9 +70,10 @@ jobs:
             --arg description "$(jq -r '.body' <<< "$release")" \
             '{created_at: $created, description: $description, download_url: $url, signature_download_url: "", version: $version}' \
             > morphe-patches/patches-bundle.json
+          cp "$RUNNER_TEMP/patches-list.json" morphe-patches/patches-list.json
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add morphe-patches/patches-bundle.json
+          git add morphe-patches/patches-bundle.json morphe-patches/patches-list.json
           git commit -m "chore: Morphe patches $TAG"
           git push origin main

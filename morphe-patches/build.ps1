@@ -14,7 +14,9 @@ if (-not $env:GITHUB_TOKEN) {
 
 Push-Location $PSScriptRoot
 try {
-    .\gradlew.bat buildAndroid generatePatchesList
+    # generatePatchesList rebuilds the plain jar, so buildAndroid (which adds classes.dex) goes last.
+    .\gradlew.bat generatePatchesList
+    .\gradlew.bat buildAndroid
     Get-ChildItem patches\build\libs\*.mpp
 } finally {
     Pop-Location

@@ -42,9 +42,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           sed -i "s/^version = .*/version = $VERSION/" gradle.properties
-          bash ./gradlew :patches:buildAndroid --no-daemon
-          test -f "patches/build/libs/patches-$VERSION.mpp"
+          # generatePatchesList rebuilds the plain jar, so it must run before buildAndroid,
+          # which adds the classes.dex that Morphe Manager needs to load the patches.
           bash ./gradlew :patches:generatePatchesList --no-daemon
+          bash ./gradlew :patches:buildAndroid --no-daemon
+          if ! unzip -l "patches/build/libs/patches-$VERSION.mpp" | grep -q ' classes.dex$'; then
+            echo "::error::patches-$VERSION.mpp has no classes.dex"
+            exit 1
+          fi
           # Moved aside so checking out main later cannot clash with a tracked copy.
           mv patches-list.json "$RUNNER_TEMP/patches-list.json"
 

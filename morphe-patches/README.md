@@ -40,6 +40,17 @@ Enabled by default, and separate so you can turn it off. It matches the notebook
 
 Unlike the server patch, these `libil2cpp.so` patches check the original bytes first and skip (with a warning) when they don't match, so a different game version isn't corrupted. See the [main README](../README.md#disabling-tracking-optional-on-by-default) for what each change does and its limitations.
 
+## Patch: "Roulette without ads"
+
+Enabled by default. It matches the notebook's `roulette_without_ads` setting. It's a bytecode patch on `com.ironsource.unity.androidbridge.AndroidBridge` (in `classes2.dex`):
+
+| Method | New behaviour |
+|--------|---------------|
+| `showRewardedVideo()` and `showRewardedVideo(String)` | Call the game's listener with "rewarded" (a dummy placement), then "closed", without showing an ad |
+| `init(String)` and `init(String, String[])` | Return straight away, so the IronSource SDK never starts |
+
+The roulette only appears once the server lifts its maintenance and pays out gems; see the [main README](../README.md#roulette-without-ads-optional-on-by-default).
+
 ## Building
 
 You need JDK 17 or newer (Android Studio's bundled JBR works) and the GitHub CLI logged in, because Morphe's Gradle plugin comes from GitHub Packages.
@@ -52,7 +63,7 @@ The bundle is written to `patches/build/libs/patches-1.0.0.mpp`.
 
 ## Using it
 
-- **Morphe Manager (phone):** open **[Add to Morphe](https://morphe.software/add-source?github=BillyCool/BlackBirdTools/morphe-patches&name=BlackBird%20Patches)** on your phone to add this repo as a patch source and get updates automatically. You can also copy a locally built `.mpp` to the phone and add it as a local file. Then choose the NieR Re[in]carnation APK, make sure "Redirect to private server" is enabled, set the options, choose whether to keep "Disable tracking and analytics" on, then patch.
+- **Morphe Manager (phone):** open **[Add to Morphe](https://morphe.software/add-source?github=BillyCool/BlackBirdTools/morphe-patches&name=BlackBird%20Patches)** on your phone to add this repo as a patch source and get updates automatically. You can also copy a locally built `.mpp` to the phone and add it as a local file. Then choose the NieR Re[in]carnation APK, make sure "Redirect to private server" is enabled, set the options, choose whether to keep "Disable tracking and analytics" and "Roulette without ads" on, then patch.
 - **Morphe Desktop:** add the `.mpp` as a patch bundle and patch the same way.
 
 The notebook expects a single APK. If you start from a split bundle (APKM or XAPK), `libil2cpp.so` must come from the arm64 split. Morphe merges splits, but this hasn't been tested.

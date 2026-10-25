@@ -29,6 +29,17 @@ See the [main README](../README.md) for why the game is patched, including the i
 
 The same rules as the notebook still apply. A replacement string can't be longer than the original. The `libil2cpp.so` offsets are hard-coded for version 3.7.1, so any other version will be corrupted silently.
 
+## Patch: "Disable tracking and analytics"
+
+Enabled by default, and separate so you can turn it off. It matches the notebook's `disable_tracking` setting.
+
+| File | What changes |
+|------|--------------|
+| `lib/arm64-v8a/libil2cpp.so` | Early `ret` in `Adjust.start`, `Adjust.trackEvent`, `Adjust.gdprForgetMe`, `Crashlytics.Log`, `Crashlytics.SetUserId` and `FirebaseAnalytics.SetAnalyticsCollectionEnabled` |
+| `AndroidManifest.xml` | Firebase and Facebook collection flags set to off; startup providers and services of Facebook, AdMob, AppLovin, IronSource and Audience Network removed, plus the Adjust referrer receiver; `AD_ID` permission removed |
+
+Unlike the server patch, these `libil2cpp.so` patches check the original bytes first and skip (with a warning) when they don't match, so a different game version isn't corrupted. See the [main README](../README.md#disabling-tracking-optional-on-by-default) for what each change does and its limitations.
+
 ## Building
 
 You need JDK 17 or newer (Android Studio's bundled JBR works) and the GitHub CLI logged in, because Morphe's Gradle plugin comes from GitHub Packages.
@@ -41,7 +52,7 @@ The bundle is written to `patches/build/libs/patches-1.0.0.mpp`.
 
 ## Using it
 
-- **Morphe Manager (phone):** open **[Add to Morphe](https://morphe.software/add-source?github=BillyCool/BlackBirdTools/morphe-patches&name=BlackBird%20Patches)** on your phone to add this repo as a patch source and get updates automatically. You can also copy a locally built `.mpp` to the phone and add it as a local file. Then choose the NieR Re[in]carnation APK, make sure "Redirect to private server" is enabled, set the options, then patch.
+- **Morphe Manager (phone):** open **[Add to Morphe](https://morphe.software/add-source?github=BillyCool/BlackBirdTools/morphe-patches&name=BlackBird%20Patches)** on your phone to add this repo as a patch source and get updates automatically. You can also copy a locally built `.mpp` to the phone and add it as a local file. Then choose the NieR Re[in]carnation APK, make sure "Redirect to private server" is enabled, set the options, choose whether to keep "Disable tracking and analytics" on, then patch.
 - **Morphe Desktop:** add the `.mpp` as a patch bundle and patch the same way.
 
 The notebook expects a single APK. If you start from a split bundle (APKM or XAPK), `libil2cpp.so` must come from the arm64 split. Morphe merges splits, but this hasn't been tested.

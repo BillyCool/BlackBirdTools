@@ -4,9 +4,16 @@ import java.io.File
 import java.io.RandomAccessFile
 import java.util.logging.Logger
 
-internal class Il2CppPatch(val name: String, val desc: String, val rva: Long, val bytes: ByteArray)
+/** [expected], when set, must match the original bytes at [rva] or the patch is skipped. */
+internal class Il2CppPatch(
+    val name: String,
+    val desc: String,
+    val rva: Long,
+    val bytes: ByteArray,
+    val expected: ByteArray? = null,
+)
 
-private fun insn(vararg words: Int) = ByteArray(words.size * 4).also { out ->
+internal fun insn(vararg words: Int) = ByteArray(words.size * 4).also { out ->
     words.forEachIndexed { i, w -> for (b in 0..3) out[i * 4 + b] = (w ushr (8 * b)).toByte() }
 }
 
@@ -14,7 +21,7 @@ private const val MOV_X0_0 = 0xD2800000.toInt()   // mov x0, #0
 private const val MOV_X0_X1 = 0xAA0103E0.toInt()  // mov x0, x1
 private const val MOV_W0_1 = 0x52800020           // mov w0, #1
 private const val NOP = 0xD503201F.toInt()        // nop
-private const val RET = 0xD65F03C0.toInt()        // ret
+internal const val RET = 0xD65F03C0.toInt()       // ret
 private const val YEAR_9999 = 0x5284E1E1          // movz w1, #0x270f (year 9999 literal)
 
 /** Encode ARM64 MOVZ W<rd>, #imm for a 16-bit immediate. */
@@ -103,6 +110,20 @@ internal fun patchLibIl2Cpp(file: File, patches: List<Il2CppPatch>, logger: Logg
             if (patch.rva + patch.bytes.size > fileSize) {
                 logger.warning("SKIP ${patch.name}: RVA 0x%X beyond file size".format(patch.rva))
                 continue
+            }
+
+            val expected = patch.expected
+            if (expected != null) {
+                val actual = ByteArray(expected.size)
+                handle.seek(patch.rva)
+                handle.readFully(actual)
+                if (!actual.contentEquals(expected)) {
+                    logger.warning(
+                        "SKIP ${patch.name}: unexpected bytes at 0x%X (${actual.hex()}), wrong game version?"
+                            .format(patch.rva),
+                    )
+                    continue
+                }
             }
 
             val original = ByteArray(patch.bytes.size)

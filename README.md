@@ -29,6 +29,23 @@ Some patches touch the game's in-app purchase code. **They are not for piracy.**
   - gRPC port override
 - `AndroidManifest.xml` / `network_security_config.xml`: allows cleartext traffic (HTTP only)
 
+### Disabling tracking (optional, on by default)
+
+The game ships with tracking and analytics SDKs that would still report to their vendors from a patched client. A separate, toggleable patch turns them off:
+
+- **Adjust**: never started, so no install, progress or purchase events (each tagged with your game user ID) are sent
+- **Firebase**: Analytics and Crashlytics collection off, game user ID and breadcrumbs no longer attached to crash reports, push token auto-registration off
+- **Facebook**: app event auto-logging and ad ID collection off, SDK no longer starts at launch
+- **Ad SDKs** (AdMob, AppLovin, IronSource, Facebook Audience Network): startup hooks removed. The game never shows ads, these only ran in the background
+- **Advertising ID**: permission removed, so Android 13 and newer give the app an all-zero ID
+
+Limitations:
+
+- Firebase itself still starts, because the game calls it on boot and would crash without it. It may still contact Google once to register an install ID, but no analytics or crash data is sent.
+- On Android 12 and older, apps can still read the real advertising ID. The only SDK left that would send it (Firebase Analytics) is off.
+- Login still makes its Google Play Integrity and SafetyNet checks, because login waits on them. SafetyNet has been shut down by Google, and the private server sends a dummy nonce, so neither check succeeds.
+- To block anything these patches miss, block the vendor hosts with DNS on your network (Adjust, `app-measurement.com`, Crashlytics, `graph.facebook.com`). Avoid blanket `googleapis.com` rules: Google Play services uses them too.
+
 The `libil2cpp.so` patches use fixed offsets taken from the latest APK release, version 3.7.1 (Global). Other versions will silently corrupt the game library. The Japanese release hasn't been tested and its offsets haven't been verified.
 
 ## Choose a tool
@@ -40,7 +57,7 @@ The `libil2cpp.so` patches use fixed offsets taken from the latest APK release, 
 
 **[➕ Add BlackBird Patches to Morphe](https://morphe.software/add-source?github=BillyCool/BlackBirdTools/morphe-patches&name=BlackBird%20Patches)**: open this link on your phone with Morphe Manager installed to add the patches as a source. Manager then keeps them up to date.
 
-Both patchers apply the same patches and take the same settings: protocol, server host, HTTP port and gRPC port.
+Both patchers apply the same patches and take the same settings: protocol, server host, HTTP port and gRPC port. Tracking is turned off by default: untick "Disable tracking and analytics" in Morphe, or set `disable_tracking` to false in the notebook, to keep it.
 
 > **Note:** a replacement URL can't be longer than the original. Use a short hostname, or leave the port out, if you hit length errors.
 

@@ -12,6 +12,7 @@
    - `grpc_port`: leave empty for 443; set it only if your server uses a non-standard gRPC port
    - `apk_source`: `upload` to upload your own APK, or `url` to download one
    - `apk_url`: where to download the APK from (only used when `apk_source` is `url`)
+   - `disable_tracking`: leave ticked to turn off the game's tracking and analytics SDKs (Adjust, Firebase, Facebook, ad SDKs)
 3. Run the cell. The patched APK downloads automatically when it's done.
 
 The notebook expects a single (non-split) APK of version **3.7.1**. Use the Global release (`com.square_enix.android_googleplay.nierspww`). The Japanese release is untested, and its offsets haven't been verified.

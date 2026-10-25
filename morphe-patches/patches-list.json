@@ -1,7 +1,50 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when the release workflow (release-morphe-patches.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "patches": [
+    {
+      "name": "Disable tracking and analytics",
+      "description": "Turns off Adjust, Firebase Analytics and Crashlytics, Facebook app events and the unused ad SDKs. None of them are useful on a private server.",
+      "default": true,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspww",
+          "name": "NieR Re[in]carnation (Global)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        },
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspjp",
+          "name": "NieR Re[in]carnation (Japan)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": null,
+              "description": "Untested: offsets are not verified for this release. Use the Global version."
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
     {
       "name": "Redirect to private server",
       "description": "Redirects all network traffic to a private server and routes in-app purchases to it, since the official servers and store shut down in 2024.",
@@ -84,6 +127,49 @@
           "values": null
         }
       ]
+    },
+    {
+      "name": "Roulette without ads",
+      "description": "The daily gem roulette spins straight away instead of playing an IronSource video ad, and the IronSource SDK never starts.",
+      "default": true,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspww",
+          "name": "NieR Re[in]carnation (Global)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        },
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspjp",
+          "name": "NieR Re[in]carnation (Japan)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": null,
+              "description": "Untested: offsets are not verified for this release. Use the Global version."
+            }
+          ]
+        }
+      ],
+      "options": []
     }
   ]
 }

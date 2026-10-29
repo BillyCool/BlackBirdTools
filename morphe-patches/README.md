@@ -9,7 +9,7 @@ It does the same three things as the notebook:
 | Step | File | What changes |
 |------|------|--------------|
 | 1 | `assets/bin/Data/Managed/Metadata/global-metadata.dat` | Rewrites the IL2CPP URL and host string literals |
-| 2 | `lib/arm64-v8a/libil2cpp.so` | ARM64 patches: SSL bypass, encryption passthrough, plain Octo list, purchases routed to the private server, year 9999, gRPC port |
+| 2 | `lib/arm64-v8a/libil2cpp.so` | ARM64 patches: SSL bypass, plain Octo list, purchases routed to the private server, year 9999, gRPC port |
 | 3 | `AndroidManifest.xml` + `res/xml/network_security_config.xml` | Allows cleartext traffic (HTTP only) |
 
 ### Options

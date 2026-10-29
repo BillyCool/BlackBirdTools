@@ -18,7 +18,6 @@ internal fun insn(vararg words: Int) = ByteArray(words.size * 4).also { out ->
 }
 
 private const val MOV_X0_0 = 0xD2800000.toInt()   // mov x0, #0
-private const val MOV_X0_X1 = 0xAA0103E0.toInt()  // mov x0, x1
 private const val MOV_W0_1 = 0x52800020           // mov w0, #1
 private const val NOP = 0xD503201F.toInt()        // nop
 internal const val RET = 0xD65F03C0.toInt()       // ret
@@ -35,16 +34,6 @@ internal val baseIl2CppPatches = listOf(
         "ToNativeCredentials",
         "SSL bypass — return NULL to force insecure gRPC channel",
         0x35C8670, insn(MOV_X0_0, RET),
-    ),
-    Il2CppPatch(
-        "HandleNet.Encrypt",
-        "encryption passthrough — return payload as-is",
-        0x279410C, insn(MOV_X0_X1, RET),
-    ),
-    Il2CppPatch(
-        "HandleNet.Decrypt",
-        "decryption passthrough — return receivedMessage as-is",
-        0x279420C, insn(MOV_X0_X1, RET),
     ),
     Il2CppPatch(
         "OctoManager.Internal.GetListAes",

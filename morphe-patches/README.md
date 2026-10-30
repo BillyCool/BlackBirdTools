@@ -9,14 +9,14 @@ It does the same three things as the notebook:
 | Step | File | What changes |
 |------|------|--------------|
 | 1 | `assets/bin/Data/Managed/Metadata/global-metadata.dat` | Rewrites the IL2CPP URL and host string literals |
-| 2 | `lib/arm64-v8a/libil2cpp.so` | ARM64 patches: SSL bypass, plain Octo list, purchases routed to the private server, year 9999, gRPC port |
+| 2 | `lib/arm64-v8a/libil2cpp.so` | ARM64 patches: SSL bypass (HTTP only), plain Octo list, purchases routed to the private server, year 9999, gRPC port |
 | 3 | `AndroidManifest.xml` + `res/xml/network_security_config.xml` | Allows cleartext traffic (HTTP only) |
 
 ### Options
 
 | Option | Notebook equivalent | Notes |
 |--------|---------------------|-------|
-| Protocol | `protocol` | `http` or `https` |
+| Protocol | `protocol` | `http` or `https`. `http` also turns the game's TLS off for gRPC; `https` keeps it, so the server needs a certificate the game trusts (for example one served through Cloudflare) |
 | Server host | `server_host` | Hostname or IP, with no protocol or port |
 | HTTP port | `http_port` | Leave empty to use the default port |
 | gRPC port | `grpc_port` | Defaults to 443 |

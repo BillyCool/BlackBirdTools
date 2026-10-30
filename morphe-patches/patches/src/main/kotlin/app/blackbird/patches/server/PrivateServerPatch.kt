@@ -29,7 +29,8 @@ val privateServerPatch = resourcePatch(
         default = "http",
         values = mapOf("HTTP (cleartext)" to "http", "HTTPS" to "https"),
         title = "Protocol",
-        description = "http also enables cleartext traffic in the manifest.",
+        description = "http also enables cleartext traffic in the manifest and turns the game's TLS off for gRPC. " +
+            "https keeps TLS on, so the server needs a certificate the game trusts (e.g. behind Cloudflare).",
         required = true,
     ) { it == "http" || it == "https" }
 
@@ -75,7 +76,14 @@ val privateServerPatch = resourcePatch(
         logger.info("$patchedStrings/${replacements.size} metadata strings patched")
 
         // [2] libil2cpp.so binary patches.
-        val il2cppPatches = baseIl2CppPatches + portPatches(cfg.grpcPort)
+        // https keeps the game's own TLS for gRPC (checked against the roots it bundles), so the server must present a
+        // certificate those roots trust, e.g. one issued through Cloudflare. Only http bypasses TLS.
+        val basePatches = if (cfg.protocol == "https") {
+            baseIl2CppPatches.filter { it.name != SSL_BYPASS_PATCH }
+        } else {
+            baseIl2CppPatches
+        }
+        val il2cppPatches = basePatches + portPatches(cfg.grpcPort)
         val patchedMethods = patchLibIl2Cpp(libFile, il2cppPatches, logger)
         logger.info("$patchedMethods/${il2cppPatches.size} libil2cpp.so methods patched")
 

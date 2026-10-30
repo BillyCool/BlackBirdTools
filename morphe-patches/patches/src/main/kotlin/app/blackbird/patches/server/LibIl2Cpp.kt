@@ -29,10 +29,13 @@ private fun movzWImm16(rd: Int, imm: Int): Int {
     return 0x52800000 or (imm shl 5) or rd
 }
 
+/** Name of the patch that makes the gRPC channel insecure; left out for https, where the game keeps its own TLS. */
+internal const val SSL_BYPASS_PATCH = "ToNativeCredentials"
+
 internal val baseIl2CppPatches = listOf(
     Il2CppPatch(
-        "ToNativeCredentials",
-        "SSL bypass — return NULL to force insecure gRPC channel",
+        SSL_BYPASS_PATCH,
+        "SSL bypass — return NULL to force insecure gRPC channel (http only)",
         0x35C8670, insn(MOV_X0_0, RET),
     ),
     Il2CppPatch(

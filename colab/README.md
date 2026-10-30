@@ -6,7 +6,7 @@
 
 1. Open [Google Colab](https://colab.research.google.com) and upload `patcher.ipynb`.
 2. Fill in the settings at the top of the code cell:
-   - `protocol`: `http` for plain connections, `https` for TLS-terminated endpoints
+   - `protocol`: `http` for plain connections, `https` for endpoints with a trusted TLS certificate (the game's own TLS stays on; `http` turns it off)
    - `server_host`: your server's hostname or IP, without the protocol (for example `192.168.1.1`)
    - `http_port`: leave empty for the default port (80 or 443, depending on the protocol)
    - `grpc_port`: leave empty for 443; set it only if your server uses a non-standard gRPC port

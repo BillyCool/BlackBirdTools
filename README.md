@@ -21,7 +21,7 @@ Some patches touch the game's in-app purchase code. **They are not for piracy.**
 
 - `global-metadata.dat`: rewrites the game's server URLs and hostnames to point at your server
 - `libil2cpp.so` (ARM64):
-  - SSL bypass
+  - SSL bypass (HTTP only: with HTTPS the game keeps its own TLS)
   - plain asset list
   - routing purchases to the private server
   - end-of-service date removal

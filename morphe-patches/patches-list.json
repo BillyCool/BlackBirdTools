@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when the release workflow (release-morphe-patches.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "patches": [
     {
       "name": "Disable tracking and analytics",
@@ -90,7 +90,7 @@
         {
           "key": "protocol",
           "title": "Protocol",
-          "description": "http also enables cleartext traffic in the manifest.",
+          "description": "http also enables cleartext traffic in the manifest and turns the game's TLS off for gRPC. https keeps TLS on, so the server needs a certificate the game trusts (e.g. behind Cloudflare).",
           "required": true,
           "type": "kotlin.String",
           "default": "http",

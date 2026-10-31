@@ -35,7 +35,7 @@ Enabled by default, and separate so you can turn it off. It matches the notebook
 
 | File | What changes |
 |------|--------------|
-| `lib/arm64-v8a/libil2cpp.so` | Early `ret` in `Adjust.start`, `Adjust.trackEvent`, `Adjust.gdprForgetMe`, `Crashlytics.Log`, `Crashlytics.SetUserId` and `FirebaseAnalytics.SetAnalyticsCollectionEnabled` |
+| `lib/arm64-v8a/libil2cpp.so` | Early `ret` in `Adjust.start`, `Adjust.trackEvent`, `Adjust.gdprForgetMe`, `Crashlytics.Log`, `Crashlytics.SetUserId`, `FirebaseAnalytics.SetAnalyticsCollectionEnabled` and `Unity.Services.Analytics.ContainerObject.Initialize` |
 | `AndroidManifest.xml` | Firebase and Facebook collection flags set to off; startup providers and services of Facebook, AdMob, AppLovin, IronSource and Audience Network removed, plus the Adjust referrer receiver; `AD_ID` permission removed |
 
 Unlike the server patch, these `libil2cpp.so` patches check the original bytes first and skip (with a warning) when they don't match, so a different game version isn't corrupted. See the [main README](../README.md#disabling-tracking-optional-on-by-default) for what each change does and its limitations.

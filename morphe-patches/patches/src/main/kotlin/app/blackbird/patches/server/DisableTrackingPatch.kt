@@ -71,6 +71,11 @@ private val trackingIl2CppPatches = listOf(
         "FirebaseAnalytics.SetAnalyticsCollectionEnabled", "Analytics: game can't turn collection back on",
         0x53E84A0, insn(RET), insn(0xA9BE4FF4.toInt(), 0xA9017BFD.toInt(), 0x910043FD.toInt(), 0x90012DF4.toInt()),
     ),
+    // Runs at startup and creates the Unity Gaming Services Analytics object, which logs "No Cloud ProjectID Found".
+    Il2CppPatch(
+        "Unity.Services.Analytics.ContainerObject.Initialize", "Unity Analytics: never create the analytics object",
+        0x52B383C, insn(RET), insn(0xA9BE4FF4.toInt(), 0xA9017BFD.toInt(), 0x910043FD.toInt(), 0xF0013773.toInt()),
+    ),
 )
 
 @Suppress("unused")

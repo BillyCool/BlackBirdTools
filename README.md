@@ -37,11 +37,13 @@ The game ships with tracking and analytics SDKs that would still report to their
 - **Facebook**: app event auto-logging and ad ID collection off, SDK no longer starts at launch
 - **Ad SDKs** (AdMob, AppLovin, IronSource, Facebook Audience Network): startup hooks removed. Only IronSource is ever used, by the gem roulette, and the roulette patch below stops it from starting
 - **Advertising ID**: permission removed, so Android 13 and newer give the app an all-zero ID
+- **Unity Analytics**: the analytics object is never created, which stops its "No Cloud ProjectID Found" error. It never sent anything.
 
 Limitations:
 
 - Firebase itself still starts, because the game calls it on boot and would crash without it. It may still contact Google once to register an install ID, but no analytics or crash data is sent.
 - On Android 12 and older, apps can still read the real advertising ID. The only SDK left that would send it (Firebase Analytics) is off.
+- The game's Unity engine also tries to reach `cdp.cloud.unity3d.com` and `config.uca.cloud.unity3d.com` every few minutes (visible as `Curl error 7` in logcat). Those come from the Unity Connect settings inside the game data, not from code, so this patch doesn't stop them; they send nothing useful.
 - Login still makes its Google Play Integrity and SafetyNet checks, because login waits on them. SafetyNet has been shut down by Google, and the private server sends a dummy nonce, so neither check succeeds.
 - To block anything these patches miss, block the vendor hosts with DNS on your network (Adjust, `app-measurement.com`, Crashlytics, `graph.facebook.com`). Avoid blanket `googleapis.com` rules: Google Play services uses them too.
 

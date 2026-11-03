@@ -1,7 +1,93 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when the release workflow (release-morphe-patches.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "patches": [
+    {
+      "name": "60 FPS",
+      "description": "Raises the frame rate cap from 30 to 60. The power saving presets stay at 10.",
+      "default": true,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspww",
+          "name": "NieR Re[in]carnation (Global)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        },
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspjp",
+          "name": "NieR Re[in]carnation (Japan)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": null,
+              "description": "Untested: offsets are not verified for this release. Use the Global version."
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Battle speed 4x",
+      "description": "The battle speed button switches between 1x and 4x instead of 1x and 2x.",
+      "default": true,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspww",
+          "name": "NieR Re[in]carnation (Global)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        },
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspjp",
+          "name": "NieR Re[in]carnation (Japan)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": null,
+              "description": "Untested: offsets are not verified for this release. Use the Global version."
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
     {
       "name": "Disable tracking and analytics",
       "description": "Turns off Adjust, Firebase Analytics and Crashlytics, Facebook app events and the unused ad SDKs. None of them are useful on a private server.",

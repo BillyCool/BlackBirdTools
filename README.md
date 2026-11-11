@@ -19,7 +19,7 @@ Some patches touch the game's in-app purchase code. **They are not for piracy.**
 
 ## What gets patched
 
-- `global-metadata.dat`: rewrites the game's server URLs and hostnames to point at your server
+- `global-metadata.dat`: rewrites the game's server URLs and hostnames to point at your server, including the Square Enix Bridge account linking and transfer pages (`/bridge/reg`, `/bridge/update` on your server's web base)
 - `libil2cpp.so` (ARM64):
   - SSL bypass (HTTP only: with HTTPS the game keeps its own TLS)
   - plain asset list

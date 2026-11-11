@@ -11,6 +11,13 @@ private const val HDR_STRING_LITERAL_OFF = 8
 private const val HDR_STRING_LITERAL_DATA_OFF = 16
 private const val GAME_NAME = "nierreincarnation"
 
+// The Square Enix Bridge pages (account linking and transfer), opened in the in-game webview with a token from
+// GetBackupToken. The server's transfer site takes their place.
+private const val BRIDGE_REGISTER_URL =
+    "https://psg.sqex-bridge.jp/ntv/{gameId}/reg/top?type={deviceType}&token={bridgeBackupToken}"
+private const val BRIDGE_TRANSFER_URL =
+    "https://psg.sqex-bridge.jp/ntv/{gameId}/update/top?type={deviceType}&token={bridgeBackupToken}"
+
 internal data class ServerConfig(
     val protocol: String,
     val host: String,
@@ -29,6 +36,8 @@ internal fun buildReplacements(cfg: ServerConfig): List<Pair<String, String>> {
             "${cfg.webBaseUrl}/assets/release/{0}/database.bin",
         "https://web.app.$game.com" to cfg.webBaseUrl,
         "https://resources-api.app.$game.com/" to "${cfg.webBaseUrl}/",
+        BRIDGE_REGISTER_URL to "${cfg.webBaseUrl}/bridge/reg?token={bridgeBackupToken}",
+        BRIDGE_TRANSFER_URL to "${cfg.webBaseUrl}/bridge/update?token={bridgeBackupToken}",
     )
 
     for ((old, new) in replacements) {

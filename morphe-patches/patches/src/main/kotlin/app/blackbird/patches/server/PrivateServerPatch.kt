@@ -8,6 +8,7 @@ import org.w3c.dom.Element
 import java.util.logging.Logger
 
 private const val METADATA_PATH = "assets/bin/Data/Managed/Metadata/global-metadata.dat"
+private const val BOOT_CONFIG_PATH = "assets/bin/Data/boot.config"
 private const val NETWORK_SECURITY_CONFIG_ATTRIBUTE = "android:networkSecurityConfig"
 
 private val logger = Logger.getLogger("PrivateServerPatch")
@@ -74,6 +75,11 @@ val privateServerPatch = resourcePatch(
         val replacements = buildReplacements(cfg)
         val patchedStrings = patchMetadataStrings(metadataFile, replacements, logger)
         logger.info("$patchedStrings/${replacements.size} metadata strings patched")
+
+        // Unity copies the IL2CPP data (the metadata) out of the APK once and only copies it again when the build
+        // date in boot.config differs from the one it stored (unity.ver). Without a new date a reinstalled, patched
+        // APK keeps running the metadata an earlier install extracted.
+        stampBuildDate(get(BOOT_CONFIG_PATH), logger)
 
         // [2] libil2cpp.so binary patches.
         // https keeps the game's own TLS for gRPC (checked against the roots it bundles), so the server must present a

@@ -10,6 +10,7 @@ It does the same three things as the notebook:
 |------|------|--------------|
 | 1 | `assets/bin/Data/Managed/Metadata/global-metadata.dat` | Rewrites the IL2CPP URL and host string literals |
 | 2 | `lib/arm64-v8a/libil2cpp.so` | ARM64 patches: SSL bypass (HTTP only), plain Octo list, purchases routed to the private server, year 9999, gRPC port |
+| 2b | `assets/bin/Data/boot.config` | New `buildDate`, so Unity extracts the patched metadata again instead of reusing the copy an earlier install left in `files/il2cpp` |
 | 3 | `AndroidManifest.xml` + `res/xml/network_security_config.xml` | Allows cleartext traffic (HTTP only) |
 
 ### Options

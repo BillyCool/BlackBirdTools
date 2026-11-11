@@ -105,3 +105,16 @@ private fun indexOf(haystack: ByteArray, needle: ByteArray, from: Int, to: Int):
     }
     return -1
 }
+
+private const val TICKS_PER_MILLISECOND = 10_000L
+private const val UNIX_EPOCH_TICKS = 621_355_968_000_000_000L
+
+/** Sets boot.config's buildDate (.NET ticks) to now, so Unity extracts the APK's IL2CPP data again on the next start. */
+internal fun stampBuildDate(file: File, logger: Logger) {
+    if (!file.isFile) throw PatchException("Not found: ${file.path}")
+    val ticks = System.currentTimeMillis() * TICKS_PER_MILLISECOND + UNIX_EPOCH_TICKS
+    val lines = file.readLines()
+    if (lines.none { it.startsWith("buildDate=") }) throw PatchException("boot.config has no buildDate line")
+    file.writeText(lines.joinToString("\n", postfix = "\n") { if (it.startsWith("buildDate=")) "buildDate=$ticks" else it })
+    logger.info("boot.config buildDate set to $ticks")
+}

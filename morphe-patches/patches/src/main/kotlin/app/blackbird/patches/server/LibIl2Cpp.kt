@@ -73,6 +73,16 @@ internal val baseIl2CppPatches = listOf(
         "Fast purchase — NOP the cbz so Initialize always proceeds (skip ~8s GP timeout)",
         0x2830834, insn(NOP),
     ),
+    Il2CppPatch(
+        "DarkPurchase.OnInitializeProcessPurchase",
+        "Purchases to private server — ignore the purchases Google Play still holds",
+        0x282D018, insn(RET), insn(0xA9BD57F6.toInt(), 0xA9014FF4.toInt(), 0xA9027BFD.toInt(), 0x910083FD.toInt()),
+    ),
+    Il2CppPatch(
+        "Purchaser.OnInitialized (keep _storeController null)",
+        "Purchases to private server — keep the Google Play store controller null",
+        0x2833A2C, insn(NOP), insn(0xA9020801.toInt()),
+    ),
 )
 
 internal fun portPatches(grpcPort: Int) = listOf(

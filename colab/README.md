@@ -12,7 +12,7 @@
    - `grpc_port`: leave empty for 443; set it only if your server uses a non-standard gRPC port
    - `apk_source`: `upload` to upload your own APK, or `url` to download one
    - `apk_url`: where to download the APK from (only used when `apk_source` is `url`)
-   - `disable_tracking`: leave ticked to turn off the game's tracking and analytics SDKs (Adjust, Firebase, Facebook, ad SDKs)
+   - `disable_tracking`: leave ticked to turn off the game's tracking and analytics SDKs (Adjust, Firebase, Facebook, ad SDKs, Unity Connect)
    - `roulette_without_ads`: leave ticked so the daily gem roulette spins without an IronSource ad
 3. Run the cell. The patched APK downloads automatically when it's done.
 

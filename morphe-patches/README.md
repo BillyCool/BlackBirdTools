@@ -21,6 +21,7 @@ It does the same three things as the notebook:
 | Server host | `server_host` | Hostname or IP, with no protocol or port |
 | HTTP port | `http_port` | Leave empty to use the default port |
 | gRPC port | `grpc_port` | Defaults to 443 |
+| Start without Google Play services | none (Morphe only) | On by default. Makes Firebase's Play services check (`google_play_services::CheckAvailability` in `lib/arm64-v8a/libFirebaseCppApp-9_6_0.so`) answer "available", so the game starts on phones and emulators without Play services instead of staying black after the logo. The original bytes are checked first |
 
 The patch targets the Global (`com.square_enix.android_googleplay.nierspww`) and Japan (`com.square_enix.android_googleplay.nierspjp`) releases, so Morphe Manager only offers it for those two apps. It targets version **3.7.1**, the latest APK release, and Manager warns if you pick a different version.
 
@@ -52,6 +53,14 @@ Enabled by default. It matches the notebook's `roulette_without_ads` setting. It
 | `init(String)` and `init(String, String[])` | Return straight away, so the IronSource SDK never starts |
 
 The roulette only appears once the server lifts its maintenance and pays out gems; see the [main README](../README.md#roulette-without-ads-optional-on-by-default).
+
+## Patch: "Bug fixes"
+
+Enabled by default. Morphe only (no notebook setting). Fixes for bugs of the original game, each one an option that is on by default.
+
+| Option | What changes |
+|--------|--------------|
+| Story camera edge | On a screen wider than 19.5:9 the story-room camera stopped short of the room's end while the invisible walls stop the player at the same distance, so a story trigger at the end of the room could not be reached. `libil2cpp.so` changes three instructions in `CameraObjectWithFollowCurrentActor.Clamp` (`0x3808EDC`) so the camera uses the game's own capped 19.5:9 ratio, like the walls and black bars. The original bytes are checked first; a different game version is skipped with a warning |
 
 ## Building
 

@@ -1,12 +1,12 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when the release workflow (release-morphe-patches.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.2.4",
+  "version": "1.3.0",
   "patches": [
     {
-      "name": "60 FPS",
-      "description": "Raises the frame rate cap from 30 to 60. The power saving presets stay at 10.",
+      "name": "Battle speed",
+      "description": "The battle speed button switches between 1x and a faster speed instead of 1x and 2x.",
       "default": true,
-      "category": null,
+      "category": "Feature improvements",
       "compatiblePackages": [
         {
           "packageName": "com.square_enix.android_googleplay.nierspww",
@@ -43,13 +43,27 @@
           ]
         }
       ],
-      "options": []
+      "options": [
+        {
+          "key": "speed",
+          "title": "Fast speed",
+          "description": "The speed the battle speed button switches to. 2x is the game's own.",
+          "required": true,
+          "type": "kotlin.String",
+          "default": "2",
+          "values": {
+            "2x": "2",
+            "3x": "3",
+            "4x": "4"
+          }
+        }
+      ]
     },
     {
-      "name": "Battle speed 4x",
-      "description": "The battle speed button switches between 1x and 4x instead of 1x and 2x.",
+      "name": "Bug fixes",
+      "description": "Fixes for bugs of the original game. Each fix can be switched off in the options.",
       "default": true,
-      "category": null,
+      "category": "Bug fixes",
       "compatiblePackages": [
         {
           "packageName": "com.square_enix.android_googleplay.nierspww",
@@ -86,13 +100,124 @@
           ]
         }
       ],
-      "options": []
+      "options": [
+        {
+          "key": "storyCameraEdge",
+          "title": "Story camera edge",
+          "description": "On screens wider than 19.5:9 the story-room camera stopped short of the room's end, so a story trigger at the end of the room could not be reached.",
+          "required": true,
+          "type": "kotlin.Boolean",
+          "default": true,
+          "values": null
+        }
+      ]
     },
     {
       "name": "Disable tracking and analytics",
-      "description": "Turns off Adjust, Firebase Analytics and Crashlytics, Facebook app events and the unused ad SDKs. None of them are useful on a private server.",
+      "description": "Turns off Adjust, Firebase Analytics and Crashlytics, Facebook app events, the unused ad SDKs and the engine's Unity Connect contact. None of them are useful on a private server.",
       "default": true,
-      "category": null,
+      "category": "Privacy",
+      "compatiblePackages": [
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspww",
+          "name": "NieR Re[in]carnation (Global)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        },
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspjp",
+          "name": "NieR Re[in]carnation (Japan)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": null,
+              "description": "Untested: offsets are not verified for this release. Use the Global version."
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Frame rate",
+      "description": "Raises the frame rate cap above the game's 30. The power saving presets stay at 10.",
+      "default": true,
+      "category": "Feature improvements",
+      "compatiblePackages": [
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspww",
+          "name": "NieR Re[in]carnation (Global)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        },
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspjp",
+          "name": "NieR Re[in]carnation (Japan)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": null,
+              "description": "Untested: offsets are not verified for this release. Use the Global version."
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "key": "frameRate",
+          "title": "Frame rate",
+          "description": "The frame rate cap. 30 is the game's own.",
+          "required": true,
+          "type": "kotlin.String",
+          "default": "30",
+          "values": {
+            "30 FPS": "30",
+            "60 FPS": "60",
+            "90 FPS": "90",
+            "120 FPS": "120"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Purchases through private server",
+      "description": "Routes in-app purchases to the private server instead of Google Play billing, which no longer sells anything for this game. Meant to be used with Redirect to private server.",
+      "default": true,
+      "category": "Private server",
       "compatiblePackages": [
         {
           "packageName": "com.square_enix.android_googleplay.nierspww",
@@ -135,7 +260,7 @@
       "name": "Redirect to private server",
       "description": "Redirects all network traffic to a private server and routes in-app purchases to it, since the official servers and store shut down in 2024.",
       "default": true,
-      "category": null,
+      "category": "Private server",
       "compatiblePackages": [
         {
           "packageName": "com.square_enix.android_googleplay.nierspww",
@@ -218,7 +343,50 @@
       "name": "Roulette without ads",
       "description": "The daily gem roulette spins straight away instead of playing an IronSource video ad, and the IronSource SDK never starts.",
       "default": true,
-      "category": null,
+      "category": "Feature improvements",
+      "compatiblePackages": [
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspww",
+          "name": "NieR Re[in]carnation (Global)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        },
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspjp",
+          "name": "NieR Re[in]carnation (Japan)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": null,
+              "description": "Untested: offsets are not verified for this release. Use the Global version."
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Start without Google Play services",
+      "description": "Makes Firebase's Google Play services check pass, so the game starts on phones and emulators without them (otherwise it stays black after the logo). Makes no difference on a phone that has them.",
+      "default": true,
+      "category": "Bug fixes",
       "compatiblePackages": [
         {
           "packageName": "com.square_enix.android_googleplay.nierspww",

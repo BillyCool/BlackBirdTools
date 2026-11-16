@@ -1,5 +1,10 @@
-package app.blackbird.patches.server
+package app.blackbird.patches.fixes
 
+import app.blackbird.patches.shared.Il2CppPatch
+import app.blackbird.patches.shared.LIBIL2CPP_PATH
+import app.blackbird.patches.shared.insn
+import app.blackbird.patches.shared.nierCompatibility
+import app.blackbird.patches.shared.patchLibIl2Cpp
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.booleanOption
 import app.morphe.patcher.patch.resourcePatch
@@ -36,6 +41,7 @@ val bugFixesPatch = resourcePatch(
     name = "Bug fixes",
     description = "Fixes for bugs of the original game. Each fix can be switched off in the options.",
 ) {
+    category("Bug fixes")
     compatibleWith(*nierCompatibility)
 
     val storyCameraEdge = booleanOption(

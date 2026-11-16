@@ -1,4 +1,4 @@
-package app.blackbird.patches.server
+package app.blackbird.patches.shared
 
 import app.morphe.patcher.patch.AppTarget
 import app.morphe.patcher.patch.Compatibility

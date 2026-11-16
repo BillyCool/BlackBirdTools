@@ -1,5 +1,10 @@
-package app.blackbird.patches.server
+package app.blackbird.patches.improvements
 
+import app.blackbird.patches.shared.Il2CppPatch
+import app.blackbird.patches.shared.LIBIL2CPP_PATH
+import app.blackbird.patches.shared.insn
+import app.blackbird.patches.shared.nierCompatibility
+import app.blackbird.patches.shared.patchLibIl2Cpp
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.resourcePatch
 import app.morphe.patcher.patch.stringOption
@@ -28,6 +33,7 @@ val battleSpeedPatch = resourcePatch(
     name = "Battle speed",
     description = "The battle speed button switches between 1x and a faster speed instead of 1x and 2x.",
 ) {
+    category("Feature improvements")
     compatibleWith(*nierCompatibility)
 
     val speed = stringOption(

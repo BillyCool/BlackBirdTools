@@ -1,5 +1,11 @@
-package app.blackbird.patches.server
+package app.blackbird.patches.tracking
 
+import app.blackbird.patches.shared.Il2CppPatch
+import app.blackbird.patches.shared.LIBIL2CPP_PATH
+import app.blackbird.patches.shared.RET
+import app.blackbird.patches.shared.insn
+import app.blackbird.patches.shared.nierCompatibility
+import app.blackbird.patches.shared.patchLibIl2Cpp
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.resourcePatch
 import org.w3c.dom.Document
@@ -137,6 +143,7 @@ val disableTrackingPatch = resourcePatch(
     description = "Turns off Adjust, Firebase Analytics and Crashlytics, Facebook app events, the " +
         "unused ad SDKs and the engine's Unity Connect contact. None of them are useful on a private server.",
 ) {
+    category("Privacy")
     compatibleWith(*nierCompatibility)
 
     execute {

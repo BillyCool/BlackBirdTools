@@ -1,5 +1,6 @@
-package app.blackbird.patches.server
+package app.blackbird.patches.improvements
 
+import app.blackbird.patches.shared.nierCompatibility
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.bytecodePatch
@@ -38,6 +39,7 @@ val rouletteWithoutAdsPatch = bytecodePatch(
     description = "The daily gem roulette spins straight away instead of playing an IronSource video ad, " +
         "and the IronSource SDK never starts.",
 ) {
+    category("Feature improvements")
     compatibleWith(*nierCompatibility)
 
     execute {

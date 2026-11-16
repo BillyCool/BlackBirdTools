@@ -1,5 +1,10 @@
-package app.blackbird.patches.server
+package app.blackbird.patches.improvements
 
+import app.blackbird.patches.shared.Il2CppPatch
+import app.blackbird.patches.shared.LIBIL2CPP_PATH
+import app.blackbird.patches.shared.insn
+import app.blackbird.patches.shared.nierCompatibility
+import app.blackbird.patches.shared.patchLibIl2Cpp
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.resourcePatch
 import app.morphe.patcher.patch.stringOption
@@ -36,6 +41,7 @@ val frameRatePatch = resourcePatch(
     name = "Frame rate",
     description = "Raises the frame rate cap above the game's 30. The power saving presets stay at 10.",
 ) {
+    category("Feature improvements")
     compatibleWith(*nierCompatibility)
 
     val frameRate = stringOption(

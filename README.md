@@ -67,7 +67,7 @@ The `libil2cpp.so` patches use fixed offsets taken from the latest APK release, 
 
 **[➕ Add BlackBird Patches to Morphe](https://morphe.software/add-source?github=BillyCool/BlackBirdTools/morphe-patches&name=BlackBird%20Patches)**: open this link on your phone with Morphe Manager installed to add the patches as a source. Manager then keeps them up to date.
 
-Both patchers apply the same patches and take the same settings: protocol, server host, HTTP port and gRPC port. Tracking is turned off by default: untick "Disable tracking and analytics" in Morphe, or set `disable_tracking` to false in the notebook, to keep it. The same goes for the roulette patch ("Roulette without ads" / `roulette_without_ads`).
+Both patchers apply the same patches and take the same settings: protocol, server host, HTTP port and gRPC port. Tracking is turned off by default: untick "Disable tracking and analytics" in Morphe, or set `disable_tracking` to false in the notebook, to keep it. The same goes for the roulette patch ("Roulette without ads" / `roulette_without_ads`) and the news patch ("News shown once" / `news_shown_once`).
 
 > **Note:** a replacement URL can't be longer than the original. Use a short hostname, or leave the port out, if you hit length errors.
 

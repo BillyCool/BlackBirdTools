@@ -16,6 +16,7 @@ Morphe Manager groups the patches by these categories.
 | Feature improvements | [Roulette without ads](#patch-roulette-without-ads) | On |
 | Feature improvements | [Frame rate](#patch-frame-rate) | On, 30 FPS (the game's own) |
 | Feature improvements | [Battle speed](#patch-battle-speed) | On, 2x (the game's own) |
+| Feature improvements | [News shown once](#patch-news-shown-once) | On |
 
 ## Patch: "Redirect to private server"
 
@@ -91,6 +92,12 @@ Enabled by default, with the game's own 30 FPS selected, so it changes nothing u
 ## Patch: "Battle speed"
 
 Enabled by default, with the game's own 2x selected. The option offers 2x, 3x or 4x for the fast setting of the battle speed button, which switches between 1x and that speed. It patches `SpeedController..cctor` (`kHighSpeed`) in `libil2cpp.so`.
+
+## Patch: "News shown once"
+
+Enabled by default. The home screen's news pop-ups (Mama's promotions, "dokans" in the game's code) are shown again after a long break: the private server starts a comeback campaign when an account returns after 28 days or more, and the game then treats every news item seen before that moment as unseen. This patch makes the game ignore the comeback date when it decides what is new, so a news item the account has already seen stays seen. News the account never saw still shows once.
+
+It changes one instruction in `libil2cpp.so`: in `CalculatorMomPromotion.CreateMomPromotionData` (`0x2AA5B64`) the call to `CalculatorComeback.GetComeBackDateTime` becomes `mov x0, #0`. The comeback campaigns themselves (stamina, drops, enhance bonuses) are unaffected, because they read the date through other code. The original bytes are checked first; a different game version is skipped with a warning.
 
 ## Building
 

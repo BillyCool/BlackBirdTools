@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when the release workflow (release-morphe-patches.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "patches": [
     {
       "name": "Battle speed",
@@ -212,6 +212,49 @@
           }
         }
       ]
+    },
+    {
+      "name": "News shown once",
+      "description": "News pop-ups an account has already seen are never shown again, however long the account was away.",
+      "default": true,
+      "category": "Feature improvements",
+      "compatiblePackages": [
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspww",
+          "name": "NieR Re[in]carnation (Global)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        },
+        {
+          "packageName": "com.square_enix.android_googleplay.nierspjp",
+          "name": "NieR Re[in]carnation (Japan)",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#F0ECE5",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "3.7.1",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": null,
+              "description": "Untested: offsets are not verified for this release. Use the Global version."
+            }
+          ]
+        }
+      ],
+      "options": []
     },
     {
       "name": "Purchases through private server",
